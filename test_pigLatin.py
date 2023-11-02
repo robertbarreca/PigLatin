@@ -8,32 +8,29 @@ class TestPigLatinTranslator(unittest.TestCase):
         test_consonantLC tests the functionality of the toPigLatin function when passed a word that 
         starts with a lower case consonant
         """
-        result = main.to_pig_latin("hello")
-        self.assertEqual(result, "ellohay")
+        self.assertEqual(main.to_pig_latin("hello"), "ellohay")
 
     def test_vowelLC(self):
         """
         test_vowelLC tests the functionality of the toPigLatin function when passed a word that 
         starts with a lower case vowel
         """
-        result = main.to_pig_latin("ionic")
-        self.assertEqual(result, "ionicay") 
+
+        self.assertEqual(main.to_pig_latin("ionic"), "ionicay") 
 
     def test_consonantUC(self):
         """
         test_consonantLC tests the functionality of the toPigLatin function when passed a word that 
         starts with a lower case consonant
         """
-        result = main.to_pig_latin("Psychedelic")
-        self.assertEqual(result, "Edelicpsychay")
+        self.assertEqual(main.to_pig_latin("Psychedelic"), "Edelicpsychay")
 
     def test_vowelUC(self):
         """
         test_vowelLC tests the functionality of the toPigLatin function when passed a word that 
         starts with a lower case vowel
         """
-        result = main.to_pig_latin("Aardvark")
-        self.assertEqual(result, "Aardvarkay") 
+        self.assertEqual(main.to_pig_latin("Aardvark"), "Aardvarkay") 
     
 
 

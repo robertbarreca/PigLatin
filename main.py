@@ -10,6 +10,9 @@ def main():
         # user does not input a word
         if not word.strip():
             continue
+        if(is_number(word)):
+            retVal += word + " "
+            continue
         retVal += to_pig_latin(word) + " "
     retVal.lower()
     print(retVal)
@@ -53,7 +56,7 @@ def to_pig_latin(word):
         i = 0
         ending = ""
         for char in word:
-            if (char != 'a' and char != 'e' and char != 'i' and char != 'o' or word[0] == 'u'):
+            if (not is_vowel(char)):
                 ending += char
                 i += 1
             else:
@@ -76,6 +79,10 @@ def to_pig_latin_uc(word):
     punctuation = ""
     containsPunctuation = False
 
+    # no english words are a one letter consonant
+    if (len(word) == 1):
+        return ""
+
     # Check if word contains punctuation
     for char in reversed(word):
         if char in ".;:,?!":
@@ -90,7 +97,7 @@ def to_pig_latin_uc(word):
     ending = ""
     for char in word:
         #letter is a consonant add to ending
-        if (char != 'a' and char != 'e' and char != 'i' and char != 'o' and char != 'u'):
+        if (not is_vowel(char)):
             ending += char.lower()
             i += 1
         else:
@@ -111,6 +118,19 @@ def is_vowel(char):
     vowels = "aeiouAEIOU"  
     return char in vowels
     
+def is_number(num):
+    """
+    is_number is a helper method that justs checks whether a given string is a number or not
+
+    :param num: the string to be checked if it is number or not
+    :return: true if the string is anumber and false otherwise
+    """
+    try:
+        float(num)  # Try to convert the string to a float
+        return True
+    except ValueError:
+        return False
+
 
 
 if __name__ == '__main__':
