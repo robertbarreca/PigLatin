@@ -8,36 +8,40 @@ def main():
     retVal = ""
     for word in text.split(" "):
         # user does not input a word
-        if(word.strip == " "):
+        if not word.strip():
             continue
-        retVal += toPigLatin(word) + " "
+        retVal += to_pig_latin(word) + " "
     retVal.lower()
     print(retVal)
 
 
-def toPigLatin(word):
+def to_pig_latin(word):
     """
-    toPigLatin takes in a word and first checks to see if the first letter is capital, if it is is then passes it to toPigLatinUC().
+    to_pig_latin takes in a word and first checks to see if the first letter is capital, if it is is then passes it to toPigLatinUC().
     Otherwise it converts the word to pig latin itself
 
     :param word: the word to be converted to pig latin
     :return: the pig latin translation of the word parameter
     """
     # first letter is upper case
-    if (word[0].isupper() and not isVowel(word[0])):
-        return toPigLatinUC(word)
+    if (word[0].isupper() and not is_vowel(word[0])):
+        return to_pig_latin_uc(word)
     
     punctuation = ""
     containsPunctuation = False
 
-    # check if word contains punctuation
-    if(word[-1] in ".;:,?!"):
-        punctuation = word[-1]
-        containsPunctuation = True
-        word = word[0:-1]
+    # Check if word contains punctuation
+    for char in reversed(word):
+        if char in ".;:,?!":
+            punctuation = char + punctuation
+            containsPunctuation = True
+        else:
+            break
+
+    word = word[:len(word) - len(punctuation)]
 
     # word starts with a vowel
-    if (isVowel(word[0])):
+    if (is_vowel(word[0])):
         # word contains punctuation add it back 
         if containsPunctuation:
             return word + "ay" + punctuation
@@ -62,9 +66,9 @@ def toPigLatin(word):
             return word[i:] + ending + "ay"
     
 
-def toPigLatinUC(word):
+def to_pig_latin_uc(word):
     """
-    toPigLatinUC converts a word that begins with an upper case letter to pig latin.
+    to_pig_latin_uc converts a word that begins with an upper case letter to pig latin.
 
     :param word: the word to be converted to pig latin
     :return: the pig latin translation of the word parameter
@@ -72,11 +76,15 @@ def toPigLatinUC(word):
     punctuation = ""
     containsPunctuation = False
 
-    # check if word contains punctuation
-    if(word[-1] in ".;:,?!"):
-        punctuation = word[-1]
-        containsPunctuation = True
-        word = word[0:-1]
+    # Check if word contains punctuation
+    for char in reversed(word):
+        if char in ".;:,?!":
+            punctuation = char + punctuation
+            containsPunctuation = True
+        else:
+            break
+
+    word = word[:len(word) - len(punctuation)]
 
     i = 0
     ending = ""
@@ -93,9 +101,9 @@ def toPigLatinUC(word):
         return word[i].upper() + word[i+1:] + ending + "ay"
 
 
-def isVowel(char):
+def is_vowel(char):
     """
-    isVowel is a helper method that just check if a given character is a vowel
+    is_vowel is a helper method that just check if a given character is a vowel
 
     :param char: the character that is checked if it is a vowel
     :return: true if the character is a vowel and false otherwise
