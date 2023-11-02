@@ -1,8 +1,7 @@
 def main():
     """
     main asks the user to input a string, then parses that string and calls the toPigLatin function on every word in the string. 
-    It additionally makes sure all the punctuation is correct based on user input. Finally it then concatenates all the returned
-    words from the toPigLatin() and prints the pig latin translation of the user input
+    It then concatenates all the returned words from the toPigLatin() and prints the pig latin translation of the user input
     """ 
     print("please enter some english")
     text = input()
@@ -11,12 +10,7 @@ def main():
         # user does not input a word
         if(word.strip == " "):
             continue
-        # word contains punctuation
-        if(word[-1] == '.' or word[-1] == ';' or word[-1] == ':' or word[-1] == ',' or word[-1] == '?' or word[-1] == '!'):
-            retVal += toPigLatin(word[0:-1]) + word[-1] + " "
-        # word does not contain punctuation
-        else:
-            retVal += toPigLatin(word) + " "
+        retVal += toPigLatin(word) + " "
     retVal.lower()
     print(retVal)
 
@@ -27,15 +21,29 @@ def toPigLatin(word):
     Otherwise it converts the word to pig latin itself
 
     :param word: the word to be converted to pig latin
-    :return: the pig latin translation of the word argument
+    :return: the pig latin translation of the word parameter
     """
     # first letter is upper case
-    if (word[0].isupper()):
+    if (word[0].isupper() and not isVowel(word[0])):
         return toPigLatinUC(word)
+    
+    punctuation = ""
+    containsPunctuation = False
+
+    # check if word contains punctuation
+    if(word[-1] in ".;:,?!"):
+        punctuation = word[-1]
+        containsPunctuation = True
+        word = word[0:-1]
 
     # word starts with a vowel
-    if (word[0] == 'a' or word[0] == 'e' or word[0] == 'i' or word[0] == 'o' or word[0] == 'u'):
-        return word + "ay"
+    if (isVowel(word[0])):
+        # word contains punctuation add it back 
+        if containsPunctuation:
+            return word + "ay" + punctuation
+        # word does not contain punctuation
+        else:
+            return word + "ay" 
     # word starts with a consonant
     else:
         i = 0
@@ -46,8 +54,12 @@ def toPigLatin(word):
                 i += 1
             else:
                 break
-    
-        return word[i:] + ending + "ay"
+        # word contains punctuation add it back
+        if containsPunctuation:
+            return word[i:] + ending + "ay" + punctuation
+        # word does not contain punctuation
+        else:
+            return word[i:] + ending + "ay"
     
 
 def toPigLatinUC(word):
@@ -55,24 +67,41 @@ def toPigLatinUC(word):
     toPigLatinUC converts a word that begins with an upper case letter to pig latin.
 
     :param word: the word to be converted to pig latin
-    :return: the pig latin translation of the word argument
+    :return: the pig latin translation of the word parameter
     """
-    # word starts with a vowel
-    if (word[0] == 'A' or word[0] == 'E' or word[0] == 'I' or word[0] == 'O' or word[0] =='U'):
-        return word + "ay"
-    # word starts with a consonant
+    punctuation = ""
+    containsPunctuation = False
+
+    # check if word contains punctuation
+    if(word[-1] in ".;:,?!"):
+        punctuation = word[-1]
+        containsPunctuation = True
+        word = word[0:-1]
+
+    i = 0
+    ending = ""
+    for char in word:
+        #letter is a consonant add to ending
+        if (char != 'a' and char != 'e' and char != 'i' and char != 'o' and char != 'u'):
+            ending += char.lower()
+            i += 1
+        else:
+            break
+    if (containsPunctuation):
+        return word[i].upper() + word[i+1:] + ending + "ay" + punctuation
     else:
-        i = 0
-        ending = ""
-        for char in word:
-            #letter is a consonant add to ending
-            if (char != 'a' and char != 'e' and char != 'i' and char != 'o' and char != 'u'):
-                ending += char.lower()
-                i += 1
-            else:
-                break
-    
         return word[i].upper() + word[i+1:] + ending + "ay"
+
+
+def isVowel(char):
+    """
+    isVowel is a helper method that just check if a given character is a vowel
+
+    :param char: the character that is checked if it is a vowel
+    :return: true if the character is a vowel and false otherwise
+    """
+    vowels = "aeiouAEIOU"  
+    return char in vowels
     
 
 
