@@ -3,6 +3,9 @@ import main
 
 
 class TestPigLatinTranslator(unittest.TestCase):
+    """
+    This class tests the functionality of main.py
+    """
 
     def test_to_pig_latin_lc(self):
         """
