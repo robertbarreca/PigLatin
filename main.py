@@ -2,16 +2,13 @@ def main():
     """
     main asks the user to input a string, then parses that string and calls the toPigLatin function on every word in the string. 
     It then concatenates all the returned words from the toPigLatin() and prints the pig latin translation of the user input
-    """ 
+    """
     print("please enter some english")
     text = input()
     retVal = ""
     for word in text.split(" "):
         # user does not input a word
         if not word.strip():
-            continue
-        if(is_number(word)):
-            retVal += word + " "
             continue
         retVal += to_pig_latin(word) + " "
     retVal.lower()
@@ -26,10 +23,14 @@ def to_pig_latin(word):
     :param word: the word to be converted to pig latin
     :return: the pig latin translation of the word parameter
     """
+
+    if (is_number(word)):
+        return word
+
     # first letter is upper case
     if (word[0].isupper() and not is_vowel(word[0])):
         return to_pig_latin_uc(word)
-    
+
     punctuation = ""
     containsPunctuation = False
 
@@ -45,12 +46,12 @@ def to_pig_latin(word):
 
     # word starts with a vowel
     if (is_vowel(word[0])):
-        # word contains punctuation add it back 
+        # word contains punctuation add it back
         if containsPunctuation:
             return word + "ay" + punctuation
         # word does not contain punctuation
         else:
-            return word + "ay" 
+            return word + "ay"
     # word starts with a consonant
     else:
         i = 0
@@ -67,7 +68,7 @@ def to_pig_latin(word):
         # word does not contain punctuation
         else:
             return word[i:] + ending + "ay"
-    
+
 
 def to_pig_latin_uc(word):
     """
@@ -96,7 +97,7 @@ def to_pig_latin_uc(word):
     i = 0
     ending = ""
     for char in word:
-        #letter is a consonant add to ending
+        # letter is a consonant add to ending
         if (not is_vowel(char)):
             ending += char.lower()
             i += 1
@@ -115,12 +116,13 @@ def is_vowel(char):
     :param char: the character that is checked if it is a vowel
     :return: true if the character is a vowel and false otherwise
     """
-    vowels = "aeiouAEIOU"  
+    vowels = "aeiouAEIOU"
     return char in vowels
-    
+
+
 def is_number(num):
     """
-    is_number is a helper method that justs checks whether a given string is a number or not
+    is_number is a helper method that checks whether a given string is a number or not
 
     :param num: the string to be checked if it is number or not
     :return: true if the string is anumber and false otherwise
@@ -130,7 +132,6 @@ def is_number(num):
         return True
     except ValueError:
         return False
-
 
 
 if __name__ == '__main__':
