@@ -31,18 +31,8 @@ def to_pig_latin(word):
     if (word[0].isupper() and not is_vowel(word[0])):
         return to_pig_latin_uc(word)
 
-    punctuation = ""
-    containsPunctuation = False
-
     # Check if word contains punctuation
-    for char in reversed(word):
-        if char in ".;:,?!":
-            punctuation = char + punctuation
-            containsPunctuation = True
-        else:
-            break
-
-    word = word[:len(word) - len(punctuation)]
+    word, punctuation, containsPunctuation = get_punctuation(word)
 
     # word starts with a vowel
     if (is_vowel(word[0])):
@@ -77,22 +67,13 @@ def to_pig_latin_uc(word):
     :param word: the word to be converted to pig latin
     :return: the pig latin translation of the word parameter
     """
-    punctuation = ""
-    containsPunctuation = False
 
     # no english words are a one letter consonant
     if (len(word) == 1):
         return ""
 
     # Check if word contains punctuation
-    for char in reversed(word):
-        if char in ".;:,?!":
-            punctuation = char + punctuation
-            containsPunctuation = True
-        else:
-            break
-
-    word = word[:len(word) - len(punctuation)]
+    word, punctuation, containsPunctuation = get_punctuation(word)
 
     i = 0
     ending = ""
@@ -132,6 +113,29 @@ def is_number(num):
         return True
     except ValueError:
         return False
+
+
+def get_punctuation(word):
+    """
+    get_punctuation is a helper method that gets the punctuation at the end of a word if there is any and separates it from the actual word
+
+    :param word: the word that may contain punctuation
+    :return word: the updated separated from the punctuation if there is any
+    :return punctuation: the punctuation at the end of the word, empty string if there is none
+    :return containsPunctuation: a boolean val that is true if the word contains punctuation and false otherwise
+    """
+    punctuation = ""
+    containsPunctuation = False
+    for char in reversed(word):
+        if char in ".;:,?!":
+            punctuation = char + punctuation
+            containsPunctuation = True
+        else:
+            break
+
+    word = word[:len(word) - len(punctuation)]
+
+    return word, punctuation, containsPunctuation
 
 
 if __name__ == '__main__':

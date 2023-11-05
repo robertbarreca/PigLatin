@@ -105,3 +105,26 @@ class TestPigLatinTranslator(unittest.TestCase):
 
         # check non-number
         self.assertFalse(main.is_number("b.34"))
+
+    def test_get_punctuation(self):
+        """
+        test_get_punctuation tests the functionality of the get_punctutation function
+        """
+
+        # check word without punctuation
+        val, punc, cont_punc = main.get_punctuation("Horseman")
+        self.assertEqual(val, "Horseman")
+        self.assertFalse(punc)
+        self.assertFalse(cont_punc)
+
+        # check word with one punctuation character
+        val, punc, cont_punc = main.get_punctuation("legend.")
+        self.assertEqual(val, "legend")
+        self.assertEqual(punc, ".")
+        self.assertTrue(cont_punc)
+
+        # check word with more than one punctuation character
+        val, punc, cont_punc = main.get_punctuation("WHEN?!?")
+        self.assertEqual(val, "WHEN")
+        self.assertEqual(punc, "?!?")
+        self.assertTrue(cont_punc)
