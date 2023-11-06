@@ -11,10 +11,13 @@ pygame.display.set_caption("English to Pig Latin Translator")
 
 base_font = pygame.font.Font(None, 18)
 input_text = ""
+active = False
 
 # create input text box
 input_rect = pygame.Rect(200, 200, 140, 32)
-color = pygame.Color(255, 255, 255)
+active_color = pygame.Color(255, 255, 255)
+inactive_color = pygame.Color('gray15')
+color = inactive_color
 
 
 run = True
@@ -23,7 +26,18 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        if event.type == pygame.KEYDOWN:
+
+        # activate input text if user clicks on text box
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if input_rect.collidepoint(event.pos):
+                active = True
+                color = active_color
+            # deactivate text box if user clicks off of it
+            else:
+                active = False
+                color = inactive_color
+
+        if event.type == pygame.KEYDOWN and active == True:
             if event.key == pygame.K_BACKSPACE:
                 input_text = input_text[:-1]
             else:
