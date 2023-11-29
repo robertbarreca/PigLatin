@@ -44,7 +44,13 @@ button_text = "Translate"
 run = True
 
 
-def translate_to_pig_latin(text):
+def translate(text):
+    """
+    translate parses some text and translates each word to pig latin and then concatenates the translation back together
+
+    :param text: the text to be translated to pig latin
+    :return: the pig latin translation of the text that was passed
+    """
     translated_text = ""
     for word in text.split(" "):
         if not word.strip():
@@ -66,7 +72,7 @@ while run:
                 active = True
                 input_color = active_color
             elif translate_button.collidepoint(event.pos):
-                output_text = translate_to_pig_latin(input_text)
+                output_text = translate(input_text)
             # deactivate text box if user clicks off of it
             else:
                 active = False
@@ -77,7 +83,7 @@ while run:
             if event.key == pygame.K_BACKSPACE:
                 input_text = input_text[:-1]
             elif event.key in (pygame.K_RETURN, pygame.K_KP_ENTER):
-                output_text = translate_to_pig_latin(input_text)
+                output_text = translate(input_text)
             elif event.key in (pygame.K_ESCAPE, pygame.K_TAB):
                 active = False
                 input_color = inactive_color
