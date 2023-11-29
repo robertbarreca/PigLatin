@@ -49,6 +49,9 @@ class TestPigLatinTranslator(unittest.TestCase):
         self.assertEqual(
             ret_val, "ethay ogday umpedjay overay ethay encefay, ateay ishay ibblekay, anday ooktay aay apnay. ")
 
+        # check only punctuation
+        self.assertEqual(main.to_pig_latin("!?!"), "!?!")
+
     def test_to_pig_latin_uc(self):
         """
         test_consonantLC tests the functionality of the to_pig_latin function when the word contains a word that starts with an upper case letter

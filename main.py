@@ -33,6 +33,8 @@ def to_pig_latin(word):
 
     # Check if word contains punctuation
     word, punctuation, containsPunctuation = get_punctuation(word)
+    if not word:
+        return punctuation
 
     # word starts with a vowel
     if (is_vowel(word[0])):
@@ -127,7 +129,7 @@ def get_punctuation(word):
     punctuation = ""
     containsPunctuation = False
     for char in reversed(word):
-        if char in ".;:,?!":
+        if char in ".;:,?!<>/\"[]{}@#$%^&*()":
             punctuation = char + punctuation
             containsPunctuation = True
         else:

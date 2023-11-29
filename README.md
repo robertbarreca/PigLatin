@@ -53,4 +53,4 @@ The test_main.py file contains unit tests for the functions in main.py. It uses 
 ## Testing
 
 You can run the unit tests in test_main.py to ensure that the Pig Latin Translator functions correctly. To do this, execute the following command in your terminal:
-`python -m unittest test_main.py` This will run the test cases and report any failures or errors.
+`python3 -m unittest test_main.py` This will run the test cases and report any failures or errors.

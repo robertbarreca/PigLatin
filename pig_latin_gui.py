@@ -72,7 +72,7 @@ while run:
                 active = False
                 input_color = inactive_color
 
-        # register text to input text box
+        # register text to text box
         if event.type == pygame.KEYDOWN and active == True:
             if event.key == pygame.K_BACKSPACE:
                 input_text = input_text[:-1]
@@ -114,16 +114,19 @@ while run:
     header2_width, header2_height = header2_surface.get_size()
     screen.blit(header2_surface, (text_box_x + 10, output_text_box_y - 25))
 
-    # Render input text inside input rect
+    # Render text to text boxes
     input_surface = base_font.render(input_text, True, (255, 255, 255))
     screen.blit(input_surface, (input_rect.x + 5, input_rect.y + 5))
     input_rect.w = max(400, input_surface.get_width() + 10)
 
-    # Render output text in output text box
     output_surface = base_font.render(output_text, True, (255, 255, 255))
     screen.blit(output_surface, (output_rect.x + 5, output_rect.y + 5))
     output_rect.w = max(400, output_surface.get_width() + 10)
 
+    # only rerender the text boxes on next iteration
+    pygame.display.update([input_rect, output_rect])
+
     pygame.display.flip()
 
+pygame.font.quit()
 pygame.quit()
